@@ -46,7 +46,7 @@ PlayerSettings:
   defaultScreenHeight: 768
   defaultScreenWidthWeb: 960
   defaultScreenHeightWeb: 600
-  m_StereoRenderingPath: 0
+  m_StereoRenderingPath: 1
   m_ActiveColorSpace: 1
   m_MTRendering: 1
   m_StackTraceTypes: 010000000100000001000000010000000100000001000000
@@ -131,7 +131,7 @@ PlayerSettings:
       enableTransitionView: 0
     daydream:
       depthFormat: 0
-      useSustainedPerformanceMode: 0
+      useSustainedPerformanceMode: 1
       enableVideoLayer: 0
       useProtectedVideoMemory: 0
       minimumSupportedHeadTracking: 0
@@ -437,6 +437,7 @@ PlayerSettings:
     m_Enabled: 1
     m_Devices:
     - cardboard
+    - daydream
   openGLRequireES31: 0
   openGLRequireES31AEP: 0
   openGLRequireES32: 0
@@ -764,7 +765,7 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   cloudProjectId: a9e20fb9-9ee3-4be9-aefc-a5dda803c584
   framebufferDepthMemorylessMode: 0
-  projectName: OldUnityMovementTester
+  projectName: Daedalus_v2
   organizationId: dankam23
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
