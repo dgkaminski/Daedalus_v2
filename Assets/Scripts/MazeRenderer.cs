@@ -28,12 +28,16 @@ public class MazeRenderer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        /*var floor = Instantiate(floorPrefab, transform) as Transform;
-        floor.position = new Vector3(0, 0, 0);
-        floor.localScale = new Vector3((width), 1, (height));*/
+        DrawFloor();
 
         var maze = MazeGenerator.Generate(width, height);
         Draw(maze);
+    }
+
+    private void DrawFloor() {
+        var floor = Instantiate(floorPrefab, transform) as Transform;
+        floor.position = new Vector3(0, 0, 0);
+        floor.localScale = new Vector3(width, 1, height);
     }
 
     private void Draw(WallState[,] maze) {
