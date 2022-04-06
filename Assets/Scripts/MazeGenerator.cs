@@ -9,17 +9,21 @@ public enum WallState
     // 0000 means no walls
     // 1111 means walls in all four directions
 
-    LEFT  = 1, // 0001
-    RIGHT = 2, // 0010
-    UP    = 4, // 0100
-    DOWN  = 8, // 1000
+    EMPTY = 0, //        0000 0000 0000
 
-   /* LIGHTLEFT = 16, // 0001 0000
-    LIGHTRIGHT = 32, // 0010 0000
-    LIGHTUP = 64, // 0100 0000
-    LIGHTDOWN = 128, // 1000 0000*/
+    LEFT  = 1, //        0000 0000 0001
+    RIGHT = 2, //        0000 0000 0010
+    UP    = 4, //        0000 0000 0100
+    DOWN  = 8, //        0000 0000 1000
 
-    VISITED = 16, // 0001 0000 0000
+    VISITED = 16, //     0000 0001 0000
+
+    LIGHTLEFT = 256, //  0001 0000 0000
+    LIGHTRIGHT = 512, // 0010 0000 0000
+    LIGHTUP = 1028, //   0100 0000 0000
+    LIGHTDOWN = 2048, // 1000 0000 0000
+
+
 }
 
 public struct Position
@@ -44,6 +48,29 @@ public static class MazeGenerator
             case WallState.UP: return WallState.DOWN;
             case WallState.DOWN: return WallState.UP;
             default: return WallState.LEFT;
+        }
+    }
+
+    private static WallState GetOppositeWall2(WallState wall)
+    {
+        if (wall.HasFlag(WallState.RIGHT))
+        {
+            return WallState.LEFT | WallState.LIGHTLEFT;
+        }
+        else if (wall.HasFlag(WallState.LEFT))
+        {
+            return WallState.RIGHT | WallState.LIGHTRIGHT;
+        }
+        else if (wall.HasFlag(WallState.UP))
+        {
+            return WallState.DOWN | WallState.LIGHTDOWN;
+        }
+        else if (wall.HasFlag(WallState.DOWN))
+        {
+            return WallState.UP | WallState.LIGHTUP;
+        } else
+        {
+            return WallState.EMPTY;
         }
     }
 
@@ -140,9 +167,9 @@ public static class MazeGenerator
             for (int j = 0; j < height; ++j) {
                 maze[i,j] = WallState.RIGHT | WallState.LEFT | WallState.UP | WallState.DOWN;
 
-                /*if (count % 5 == 0) {
-                    maze[i,j] = WallState.LIGHTRIGHT | WallState.LIGHTLEFT | WallState.LIGHTUP | WallState.LIGHTDOWN;
-                }*/
+                if (count % 5 == 0) {
+                    maze[i,j] |= WallState.LIGHTRIGHT | WallState.LIGHTLEFT | WallState.LIGHTUP | WallState.LIGHTDOWN;
+                }
                 
                 count++;
             }

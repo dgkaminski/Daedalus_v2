@@ -20,7 +20,7 @@ public class MazeRenderer : MonoBehaviour
     private Transform wallPrefab = null;
 
     [SerializeField]
-    private Transform light = null;
+    private Transform lightPrefab = null;
 
     [SerializeField]
     private Transform floorPrefab = null;
@@ -56,11 +56,24 @@ public class MazeRenderer : MonoBehaviour
                     topWall.localScale = new Vector3(size, topWall.localScale.y, topWall.localScale.z);
                 }
 
+                if (cell.HasFlag(WallState.LIGHTUP))
+                {
+                    var topLight = Instantiate(lightPrefab, transform) as Transform;
+                    topLight.position = position + new Vector3(0, 0, size / 2);
+                }
+
                 if (cell.HasFlag(WallState.LEFT)) {
                     var leftWall = Instantiate(wallPrefab, transform) as Transform;
                     leftWall.position = position + new Vector3(-size / 2, 0, 0);
                     leftWall.localScale = new Vector3(size, leftWall.localScale.y, leftWall.localScale.z);
                     leftWall.eulerAngles = new Vector3(0, 90, 0);
+                }
+
+                if (cell.HasFlag(WallState.LIGHTLEFT))
+                {
+                    var leftLight = Instantiate(lightPrefab, transform) as Transform;
+                    leftLight.position = position + new Vector3(-size / 2, 0, 0);
+                    leftLight.eulerAngles = new Vector3(0, 90, 0);
                 }
 
                 if (i == width - 1) {
@@ -70,6 +83,13 @@ public class MazeRenderer : MonoBehaviour
                         rightWall.localScale = new Vector3(size, rightWall.localScale.y, rightWall.localScale.z);
                         rightWall.eulerAngles = new Vector3(0, 90, 0);
                     }
+
+                    if (cell.HasFlag(WallState.LIGHTRIGHT))
+                    {
+                        var rightLight = Instantiate(lightPrefab, transform) as Transform;
+                        rightLight.position = position + new Vector3(+size / 2, 0, 0);
+                        rightLight.eulerAngles = new Vector3(0, 90, 0);
+                    }
                 }
 
                 if (j == 0) {
@@ -77,6 +97,12 @@ public class MazeRenderer : MonoBehaviour
                         var bottomWall = Instantiate(wallPrefab, transform) as Transform;
                         bottomWall.position = position + new Vector3(0, 0, -size / 2);
                         bottomWall.localScale = new Vector3(size, bottomWall.localScale.y, bottomWall.localScale.z);
+                    }
+
+                    if (cell.HasFlag(WallState.LIGHTDOWN))
+                    {
+                        var bottomLight = Instantiate(lightPrefab, transform) as Transform;
+                        bottomLight.position = position + new Vector3(0, 0, -size / 2);
                     }
                 }
             }
