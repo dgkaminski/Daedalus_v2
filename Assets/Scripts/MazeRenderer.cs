@@ -20,6 +20,9 @@ public class MazeRenderer : MonoBehaviour
     private Transform wallPrefab = null;
 
     [SerializeField]
+    private Transform light = null;
+
+    [SerializeField]
     private Transform floorPrefab = null;
 
     /*[SerializeField]
@@ -41,6 +44,7 @@ public class MazeRenderer : MonoBehaviour
     }
 
     private void Draw(WallState[,] maze) {
+
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 var cell = maze[i,j];

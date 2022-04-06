@@ -4,7 +4,8 @@ using UnityEngine;
 using System;
 
 [Flags]
-public enum WallState {
+public enum WallState
+{
     // 0000 means no walls
     // 1111 means walls in all four directions
 
@@ -13,15 +14,22 @@ public enum WallState {
     UP    = 4, // 0100
     DOWN  = 8, // 1000
 
-    VISITED = 128, // 1000 0000
+   /* LIGHTLEFT = 16, // 0001 0000
+    LIGHTRIGHT = 32, // 0010 0000
+    LIGHTUP = 64, // 0100 0000
+    LIGHTDOWN = 128, // 1000 0000*/
+
+    VISITED = 16, // 0001 0000 0000
 }
 
-public struct Position {
+public struct Position
+{
     public int X;
     public int Y;
 }
 
-public struct Neighbor {
+public struct Neighbor
+{
     public Position Position;
     public WallState SharedWall;
 }
@@ -126,9 +134,17 @@ public static class MazeGenerator
     public static WallState[,] Generate(int width, int height) {
         WallState[,] maze = new WallState[width, height];
 
+        int count = 0;
+
         for (int i = 0; i < width; ++i) {
             for (int j = 0; j < height; ++j) {
                 maze[i,j] = WallState.RIGHT | WallState.LEFT | WallState.UP | WallState.DOWN;
+
+                /*if (count % 5 == 0) {
+                    maze[i,j] = WallState.LIGHTRIGHT | WallState.LIGHTLEFT | WallState.LIGHTUP | WallState.LIGHTDOWN;
+                }*/
+                
+                count++;
             }
         }
 
