@@ -16,14 +16,12 @@ public enum WallState
     UP    = 4, //        0000 0000 0100
     DOWN  = 8, //        0000 0000 1000
 
-    VISITED = 16, //     0000 0001 0000
+    LIGHTLEFT = 16, //   0000 0001 0000
+    LIGHTRIGHT = 32, //  0000 0010 0000
+    LIGHTUP = 64, //     0000 0100 0000
+    LIGHTDOWN = 128, //  0000 1000 0000
 
-    LIGHTLEFT = 256, //  0001 0000 0000
-    LIGHTRIGHT = 512, // 0010 0000 0000
-    LIGHTUP = 1028, //   0100 0000 0000
-    LIGHTDOWN = 2048, // 1000 0000 0000
-
-
+    VISITED = 256, //    0001 0000 0000
 }
 
 public struct Position
@@ -93,7 +91,7 @@ public static class MazeGenerator
 
                 var nPosition = randomNeighbor.Position;
                 maze[current.X, current.Y] &= ~randomNeighbor.SharedWall;
-                maze[nPosition.X, nPosition.Y] &= ~GetOppositeWall(randomNeighbor.SharedWall);
+                maze[nPosition.X, nPosition.Y] &= ~GetOppositeWall2(randomNeighbor.SharedWall);
 
                 maze[nPosition.X, nPosition.Y] |= WallState.VISITED;
 
@@ -109,12 +107,14 @@ public static class MazeGenerator
 
         if (p.X > 0) { //left
             if (!maze[p.X - 1, p.Y].HasFlag(WallState.VISITED)) {
-                list.Add(new Neighbor {
-                    Position = new Position {
+                list.Add(new Neighbor
+                {
+                    Position = new Position
+                    {
                         X = p.X - 1,
                         Y = p.Y
                     },
-                    SharedWall = WallState.LEFT
+                    SharedWall = WallState.LEFT | WallState.LIGHTLEFT
                 });
             }
         }
@@ -126,7 +126,7 @@ public static class MazeGenerator
                         X = p.X,
                         Y = p.Y - 1
                     },
-                    SharedWall = WallState.DOWN
+                    SharedWall = WallState.DOWN | WallState.LIGHTDOWN
                 });
             }
         }
@@ -138,7 +138,7 @@ public static class MazeGenerator
                         X = p.X,
                         Y = p.Y + 1
                     },
-                    SharedWall = WallState.UP
+                    SharedWall = WallState.UP | WallState.LIGHTUP
                 });
             }
         }
@@ -150,7 +150,7 @@ public static class MazeGenerator
                         X = p.X + 1,
                         Y = p.Y
                     },
-                    SharedWall = WallState.RIGHT
+                    SharedWall = WallState.RIGHT | WallState.LIGHTRIGHT
                 });
             }
         }
@@ -158,20 +158,33 @@ public static class MazeGenerator
         return list;
     }
 
-    public static WallState[,] Generate(int width, int height) {
+    public static WallState[,] Generate(int width, int height, float lightChance) {
         WallState[,] maze = new WallState[width, height];
 
-        int count = 0;
+        var rng = new System.Random();
 
         for (int i = 0; i < width; ++i) {
             for (int j = 0; j < height; ++j) {
                 maze[i,j] = WallState.RIGHT | WallState.LEFT | WallState.UP | WallState.DOWN;
 
-                if (count % 5 == 0) {
-                    maze[i,j] |= WallState.LIGHTRIGHT | WallState.LIGHTLEFT | WallState.LIGHTUP | WallState.LIGHTDOWN;
+                if (rng.NextDouble() < lightChance) {
+                    int rand = rng.Next(0, 4);
+                    if (rand == 0)
+                    {
+                        maze[i, j] |= WallState.LIGHTRIGHT;
+                    }
+                    else if (rand == 1)
+                    {
+                        maze[i, j] |= WallState.LIGHTLEFT;
+                    }
+                    else if (rand == 2) {
+                        maze[i, j] |= WallState.LIGHTUP;
+                    }
+                    else if (rand == 3)
+                    {
+                        maze[i, j] |= WallState.LIGHTDOWN;
+                    }
                 }
-                
-                count++;
             }
         }
 
