@@ -12,7 +12,7 @@ public class WalkingPedometer : MonoBehaviour
     [TooltipAttribute("This is used for the high-pass filter")]
     public float fHighFilter = 18.0f;
     [TooltipAttribute("Used to know if we change state from low-high")]
-    public float lowThreshold = 0.02f;  //0.001
+    public float lowThreshold = 0.001f;  //0.001 //0.02
     [TooltipAttribute("Used to know if we change state from low-high")]
     public float walkingThreshold = 0.1f;
     [TooltipAttribute("Used in the corrutine to move the player")]
@@ -20,7 +20,7 @@ public class WalkingPedometer : MonoBehaviour
 
     [Header("Speed factors")]
     [TooltipAttribute("The speed factor of the player during movement")]
-    public float speedFactor=0.5f;
+    public float speedFactor=0.1f;
     [TooltipAttribute("The parameter used in the function Ae^(Bx)")]
     public float A=9.0f;
     [TooltipAttribute("The parameter used in the function Ae^(Bx)")]

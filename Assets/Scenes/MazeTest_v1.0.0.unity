@@ -253,8 +253,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf7ac21f77d4a054596832085c37ea85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 20
-  height: 20
+  width: 25
+  height: 25
   size: 1
   wallPrefab: {fileID: 3521960713377647065, guid: 63ff202faa7edab4e87acf28be025e3c,
     type: 3}
@@ -264,7 +264,11 @@ MonoBehaviour:
     type: 3}
   horizOffset: 0.2
   vertOffset: 1
-  lightChance: 1
+  lightChance: 0.5
+  mapWallWidth: 0
+  mapCellWidth: 0
+  wallColor: {r: 0, g: 0, b: 0, a: 0}
+  cellColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!4 &515742564
 Transform:
   m_ObjectHideFlags: 0
@@ -516,7 +520,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1039632245
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -598,6 +602,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 162814, guid: 8524bbe5e592a42dc9251484a73c9c7f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 452846, guid: 8524bbe5e592a42dc9251484a73c9c7f, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -807,10 +815,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fLowFilter: 0.12
   fHighFilter: 18
-  lowThreshold: 0.02
+  lowThreshold: 0.001
   walkingThreshold: 0.1
   timeWalk: 0.5
-  speedFactor: 0.5
+  speedFactor: 0.1
   A: 9
   B: -3
   stepsCount: 0

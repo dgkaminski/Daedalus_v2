@@ -21,7 +21,8 @@ public enum WallState
     LIGHTUP = 64, //     0000 0100 0000
     LIGHTDOWN = 128, //  0000 1000 0000
 
-    VISITED = 256, //    0001 0000 0000
+    LIGHT = 256, //      0001 0000 0000
+    VISITED = 512, //    0010 0000 0000
 }
 
 public struct Position
@@ -66,7 +67,8 @@ public static class MazeGenerator
         else if (wall.HasFlag(WallState.DOWN))
         {
             return WallState.UP | WallState.LIGHTUP;
-        } else
+        }
+        else
         {
             return WallState.EMPTY;
         }
@@ -92,6 +94,166 @@ public static class MazeGenerator
                 var nPosition = randomNeighbor.Position;
                 maze[current.X, current.Y] &= ~randomNeighbor.SharedWall;
                 maze[nPosition.X, nPosition.Y] &= ~GetOppositeWall2(randomNeighbor.SharedWall);
+
+                if (maze[current.X, current.Y].HasFlag(WallState.LIGHT) && !(maze[current.X, current.Y].HasFlag(WallState.LIGHTLEFT) || maze[current.X, current.Y].HasFlag(WallState.LIGHTUP) || maze[current.X, current.Y].HasFlag(WallState.LIGHTRIGHT) || maze[current.X, current.Y].HasFlag(WallState.LIGHTDOWN)))
+                {
+                    if (rng.Next(0, NumWalls(maze[current.X, current.Y])) == 0)
+                    {
+                        if (maze[current.X, current.Y].HasFlag(WallState.LEFT))
+                        {
+                            maze[current.X, current.Y] |= WallState.LIGHTLEFT;
+                        }
+                        else if (maze[current.X, current.Y].HasFlag(WallState.UP))
+                        {
+                            maze[current.X, current.Y] |= WallState.LIGHTUP;
+                        }
+                        else if (maze[current.X, current.Y].HasFlag(WallState.RIGHT))
+                        {
+                            maze[current.X, current.Y] |= WallState.LIGHTRIGHT;
+                        }
+                        else if (maze[current.X, current.Y].HasFlag(WallState.DOWN))
+                        {
+                            maze[current.X, current.Y] |= WallState.LIGHTDOWN;
+                        }
+                    }
+                    else if (rng.Next(0, NumWalls(maze[current.X, current.Y]) - 1) == 0)
+                    {
+                        if (maze[current.X, current.Y].HasFlag(WallState.UP))
+                        {
+                            maze[current.X, current.Y] |= WallState.LIGHTUP;
+                        }
+                        else if (maze[current.X, current.Y].HasFlag(WallState.RIGHT))
+                        {
+                            maze[current.X, current.Y] |= WallState.LIGHTRIGHT;
+                        }
+                        else if (maze[current.X, current.Y].HasFlag(WallState.DOWN))
+                        {
+                            maze[current.X, current.Y] |= WallState.LIGHTDOWN;
+                        }
+                        else if (maze[current.X, current.Y].HasFlag(WallState.LEFT))
+                        {
+                            maze[current.X, current.Y] |= WallState.LIGHTLEFT;
+                        }
+                    }
+                    else if (rng.Next(0, NumWalls(maze[current.X, current.Y]) - 2) == 0)
+                    {
+                        if (maze[current.X, current.Y].HasFlag(WallState.RIGHT))
+                        {
+                            maze[current.X, current.Y] |= WallState.LIGHTRIGHT;
+                        }
+                        else if (maze[current.X, current.Y].HasFlag(WallState.DOWN))
+                        {
+                            maze[current.X, current.Y] |= WallState.LIGHTDOWN;
+                        }
+                        else if (maze[current.X, current.Y].HasFlag(WallState.LEFT))
+                        {
+                            maze[current.X, current.Y] |= WallState.LIGHTLEFT;
+                        }
+                        else if (maze[current.X, current.Y].HasFlag(WallState.UP))
+                        {
+                            maze[current.X, current.Y] |= WallState.LIGHTUP;
+                        }
+                    }
+                    else
+                    {
+                        if (maze[current.X, current.Y].HasFlag(WallState.DOWN))
+                        {
+                            maze[current.X, current.Y] |= WallState.LIGHTDOWN;
+                        }
+                        else if (maze[current.X, current.Y].HasFlag(WallState.LEFT))
+                        {
+                            maze[current.X, current.Y] |= WallState.LIGHTLEFT;
+                        }
+                        else if (maze[current.X, current.Y].HasFlag(WallState.UP))
+                        {
+                            maze[current.X, current.Y] |= WallState.LIGHTUP;
+                        }
+                        else if (maze[current.X, current.Y].HasFlag(WallState.RIGHT))
+                        {
+                            maze[current.X, current.Y] |= WallState.LIGHTRIGHT;
+                        }
+                    }
+                }
+
+                if (maze[nPosition.X, nPosition.Y].HasFlag(WallState.LIGHT) && !(maze[nPosition.X, nPosition.Y].HasFlag(WallState.LIGHTLEFT) || maze[nPosition.X, nPosition.Y].HasFlag(WallState.LIGHTUP) || maze[nPosition.X, nPosition.Y].HasFlag(WallState.LIGHTRIGHT) || maze[nPosition.X, nPosition.Y].HasFlag(WallState.LIGHTDOWN)))
+                {
+                    if (rng.Next(0, NumWalls(maze[nPosition.X, nPosition.Y])) == 0)
+                    {
+                        if (maze[nPosition.X, nPosition.Y].HasFlag(WallState.LEFT))
+                        {
+                            maze[nPosition.X, nPosition.Y] |= WallState.LIGHTLEFT;
+                        }
+                        else if (maze[nPosition.X, nPosition.Y].HasFlag(WallState.UP))
+                        {
+                            maze[nPosition.X, nPosition.Y] |= WallState.LIGHTUP;
+                        }
+                        else if (maze[nPosition.X, nPosition.Y].HasFlag(WallState.RIGHT))
+                        {
+                            maze[nPosition.X, nPosition.Y] |= WallState.LIGHTRIGHT;
+                        }
+                        else if (maze[nPosition.X, nPosition.Y].HasFlag(WallState.DOWN))
+                        {
+                            maze[nPosition.X, nPosition.Y] |= WallState.LIGHTDOWN;
+                        }
+                    }
+                    else if (rng.Next(0, NumWalls(maze[nPosition.X, nPosition.Y]) - 1) == 0)
+                    {
+                        if (maze[nPosition.X, nPosition.Y].HasFlag(WallState.UP))
+                        {
+                            maze[nPosition.X, nPosition.Y] |= WallState.LIGHTUP;
+                        }
+                        else if (maze[nPosition.X, nPosition.Y].HasFlag(WallState.RIGHT))
+                        {
+                            maze[nPosition.X, nPosition.Y] |= WallState.LIGHTRIGHT;
+                        }
+                        else if (maze[nPosition.X, nPosition.Y].HasFlag(WallState.DOWN))
+                        {
+                            maze[nPosition.X, nPosition.Y] |= WallState.LIGHTDOWN;
+                        }
+                        else if (maze[nPosition.X, nPosition.Y].HasFlag(WallState.LEFT))
+                        {
+                            maze[nPosition.X, nPosition.Y] |= WallState.LIGHTLEFT;
+                        }
+                    }
+                    else if (rng.Next(0, NumWalls(maze[nPosition.X, nPosition.Y]) - 2) == 0)
+                    {
+                        if (maze[nPosition.X, nPosition.Y].HasFlag(WallState.RIGHT))
+                        {
+                            maze[nPosition.X, nPosition.Y] |= WallState.LIGHTRIGHT;
+                        }
+                        else if (maze[nPosition.X, nPosition.Y].HasFlag(WallState.DOWN))
+                        {
+                            maze[nPosition.X, nPosition.Y] |= WallState.LIGHTDOWN;
+                        }
+                        else if (maze[nPosition.X, nPosition.Y].HasFlag(WallState.LEFT))
+                        {
+                            maze[nPosition.X, nPosition.Y] |= WallState.LIGHTLEFT;
+                        }
+                        else if (maze[nPosition.X, nPosition.Y].HasFlag(WallState.UP))
+                        {
+                            maze[nPosition.X, nPosition.Y] |= WallState.LIGHTUP;
+                        }
+                    }
+                    else
+                    {
+                        if (maze[nPosition.X, nPosition.Y].HasFlag(WallState.DOWN))
+                        {
+                            maze[nPosition.X, nPosition.Y] |= WallState.LIGHTDOWN;
+                        }
+                        else if (maze[nPosition.X, nPosition.Y].HasFlag(WallState.LEFT))
+                        {
+                            maze[nPosition.X, nPosition.Y] |= WallState.LIGHTLEFT;
+                        }
+                        else if (maze[nPosition.X, nPosition.Y].HasFlag(WallState.UP))
+                        {
+                            maze[nPosition.X, nPosition.Y] |= WallState.LIGHTUP;
+                        }
+                        else if (maze[nPosition.X, nPosition.Y].HasFlag(WallState.RIGHT))
+                        {
+                            maze[nPosition.X, nPosition.Y] |= WallState.LIGHTRIGHT;
+                        }
+                    }
+                }
 
                 maze[nPosition.X, nPosition.Y] |= WallState.VISITED;
 
@@ -163,11 +325,16 @@ public static class MazeGenerator
 
         var rng = new System.Random();
 
-        for (int i = 0; i < width; ++i) {
-            for (int j = 0; j < height; ++j) {
-                maze[i,j] = WallState.RIGHT | WallState.LEFT | WallState.UP | WallState.DOWN;
+        for (int i = 0; i < width; ++i)
+        {
+            for (int j = 0; j < height; ++j)
+            {
+                maze[i, j] = WallState.RIGHT | WallState.LEFT | WallState.UP | WallState.DOWN;
 
-                if (rng.NextDouble() < lightChance) {
+                if (rng.NextDouble() <= lightChance)
+                {
+                    maze[i, j] |= WallState.LIGHT;
+
                     int rand = rng.Next(0, 4);
                     if (rand == 0)
                     {
@@ -177,7 +344,8 @@ public static class MazeGenerator
                     {
                         maze[i, j] |= WallState.LIGHTLEFT;
                     }
-                    else if (rand == 2) {
+                    else if (rand == 2)
+                    {
                         maze[i, j] |= WallState.LIGHTUP;
                     }
                     else if (rand == 3)
@@ -189,5 +357,32 @@ public static class MazeGenerator
         }
 
         return ApplyRecursiveBacktracker(maze, width, height);
+    }
+
+    public static int NumWalls(WallState walls)
+    {
+        int count = 0;
+        if (walls.HasFlag(WallState.LEFT))
+        {
+            count++;
+        }
+        if (walls.HasFlag(WallState.RIGHT))
+        {
+            count++;
+        }
+        if (walls.HasFlag(WallState.UP))
+        {
+            count++;
+        }
+        if (walls.HasFlag(WallState.DOWN))
+        {
+            count++;
+        }
+        return count;
+    }
+
+    public static Boolean Contains(WallState original, WallState sub)
+    {
+        return (original | sub).Equals(original);
     }
 }

@@ -37,6 +37,20 @@ public class MazeRenderer : MonoBehaviour
     [Range(0, 1)]
     private float lightChance = 0.5f;
 
+    [SerializeField]
+    [Range(1, 10)]
+    private int mapWallWidth = 0;
+
+    [SerializeField]
+    [Range(1, 20)]
+    private int mapCellWidth = 0;
+
+    [SerializeField]
+    private Color wallColor;
+
+    [SerializeField]
+    private Color cellColor;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -57,6 +71,8 @@ public class MazeRenderer : MonoBehaviour
     }
 
     private void Draw(WallState[,] maze) {
+
+        Texture2D map = new Texture2D(width * (mapCellWidth + mapWallWidth) + mapWallWidth, height * (mapCellWidth + mapWallWidth) + mapWallWidth);
 
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {

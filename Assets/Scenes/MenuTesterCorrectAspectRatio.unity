@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028355, g: 0.22571374, b: 0.30692255, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0.99999905, b: 0.99999905, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -637,6 +637,7 @@ GameObject:
   - component: {fileID: 510246282}
   - component: {fileID: 510246281}
   - component: {fileID: 510246280}
+  - component: {fileID: 510246283}
   m_Layer: 5
   m_Name: StartMaze
   m_TagString: Untagged
@@ -707,7 +708,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 102900000, guid: 884d9d041019a457aa22cec96cb507e0, type: 3}
         m_MethodName: 
         m_Mode: 1
         m_Arguments:
@@ -755,6 +756,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 510246278}
   m_CullTransparentMesh: 0
+--- !u!114 &510246283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 510246278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4e8b53fd9a6e4fbdb3947c5604f5a23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &513471160
 GameObject:
   m_ObjectHideFlags: 0
