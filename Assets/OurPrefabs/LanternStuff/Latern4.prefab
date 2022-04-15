@@ -412,7 +412,7 @@ MeshRenderer:
   m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
+  m_ImportantGI: 1
   m_StitchLightmapSeams: 1
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
@@ -446,13 +446,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 713408965524203271}
-  m_LocalRotation: {x: 0.5023131, y: -0.19549161, z: 0.15238716, w: 0.8283977}
-  m_LocalPosition: {x: 0, y: 0.050728682, z: -0.014862052}
+  m_LocalRotation: {x: 0.45226488, y: 0.14711685, z: -0.10665924, w: 0.87317634}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4171262313632050}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 63.102, y: -22.181002, z: 7.1200004}
+  m_LocalEulerAnglesHint: {x: 55.205, y: 16.329, z: -5.3490005}
 --- !u!108 &7949633926817663293
 Light:
   m_ObjectHideFlags: 0
@@ -464,9 +464,9 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.7169812, g: 0.5096335, b: 0.3077608, a: 1}
-  m_Intensity: 0.3
-  m_Range: 10
+  m_Color: {r: 0.8113208, g: 0.5686275, b: 0.15690637, a: 1}
+  m_Intensity: 1
+  m_Range: 5.038613
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -506,8 +506,8 @@ Light:
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
-  m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 0
+  m_AreaSize: {x: 4.743851, y: 2.9519718}
+  m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}

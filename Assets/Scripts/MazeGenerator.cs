@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+/**
+ * Represents the state that a cell can have. Each flag represents a wall (LEFT, RIGHT, UP, and DOWN), a light in a given position (LIGHTLEFT, LIGHTRIGHT, LIGHTUP, LIGHTDOWN), whether or not the cell has a light at all (LIGHT), or whether the cell has been visited (VISITED)
+ */
 [Flags]
 public enum WallState
 {
@@ -25,12 +28,18 @@ public enum WallState
     VISITED = 512, //    0010 0000 0000
 }
 
+/**
+ * Represents a position in two-dimensional space
+ */
 public struct Position
 {
     public int X;
     public int Y;
 }
 
+/**
+ * a struct containing a wallstate representing the wall it shares with another wallstate and a position
+ */
 public struct Neighbor
 {
     public Position Position;
@@ -40,6 +49,9 @@ public struct Neighbor
 public static class MazeGenerator
 {
 
+    /**
+     * Returns the wallstate containg the opposite wall of a given wallstate (left -> right, up -> down, etc.)
+     */
     private static WallState GetOppositeWall(WallState wall) {
         switch (wall) {
             case WallState.RIGHT: return WallState.LEFT;
@@ -50,6 +62,10 @@ public static class MazeGenerator
         }
     }
 
+    /**
+     * Returns a wallstate containing the opposite of a given wall and the light that would hang on that wall
+     * (leftwall -> rightwall and rightlight, etc.)
+     */
     private static WallState GetOppositeWall2(WallState wall)
     {
         if (wall.HasFlag(WallState.RIGHT))
@@ -74,6 +90,9 @@ public static class MazeGenerator
         }
     }
 
+    /**
+     * Returns a two-dimensional wallstate array representing a maze after the algorithm has been applied
+     */
     private static WallState[,] ApplyRecursiveBacktracker(WallState[,] maze, int width, int height) {
         var rng = new System.Random();
         var positionStack = new Stack<Position>();
@@ -264,6 +283,9 @@ public static class MazeGenerator
         return maze;
     }
 
+    /**
+     * Returns a list of all the neighboring cells that have not been visited
+     */
     private static List<Neighbor> GetUnvisitedNeighbours(Position p, WallState[,] maze, int width, int height) {
         var list = new List<Neighbor>();
 
@@ -320,6 +342,9 @@ public static class MazeGenerator
         return list;
     }
 
+    /**
+     * Generates a maze with a given width, height, and chance for each cell to contain a light
+     */
     public static WallState[,] Generate(int width, int height, float lightChance) {
         WallState[,] maze = new WallState[width, height];
 
@@ -331,7 +356,7 @@ public static class MazeGenerator
             {
                 maze[i, j] = WallState.RIGHT | WallState.LEFT | WallState.UP | WallState.DOWN;
 
-                if (rng.NextDouble() <= lightChance)
+                if (rng.NextDouble() < lightChance)
                 {
                     maze[i, j] |= WallState.LIGHT;
 
@@ -359,6 +384,9 @@ public static class MazeGenerator
         return ApplyRecursiveBacktracker(maze, width, height);
     }
 
+    /**
+     * returns the number of walls (left, right, up, and down) in a given wallstate. It does not count anything else about the wallstate.
+     */
     public static int NumWalls(WallState walls)
     {
         int count = 0;
@@ -381,6 +409,9 @@ public static class MazeGenerator
         return count;
     }
 
+    /**
+     * Checks whether or not a given wallstate contains all the flags in a second wallstate
+     */
     public static Boolean Contains(WallState original, WallState sub)
     {
         return (original | sub).Equals(original);

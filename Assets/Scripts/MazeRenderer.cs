@@ -45,11 +45,16 @@ public class MazeRenderer : MonoBehaviour
     [Range(1, 20)]
     private int mapCellWidth = 0;
 
+    /*
     [SerializeField]
     private Color wallColor;
 
     [SerializeField]
     private Color cellColor;
+
+    [SerializeField]
+    private Color nodeColor;
+    */
 
     // Start is called before the first frame update
     void Start()
@@ -72,7 +77,34 @@ public class MazeRenderer : MonoBehaviour
 
     private void Draw(WallState[,] maze) {
 
-        Texture2D map = new Texture2D(width * (mapCellWidth + mapWallWidth) + mapWallWidth, height * (mapCellWidth + mapWallWidth) + mapWallWidth);
+        int pictureWidth = width * (mapCellWidth + mapWallWidth) + mapWallWidth;
+        int pictureHeight = height * (mapCellWidth + mapWallWidth) + mapWallWidth;
+
+        Texture2D map = new Texture2D(pictureWidth, pictureHeight);
+
+        int[,] mapPixels = new int[pictureWidth, pictureHeight];
+
+        for (int i = 0; i < pictureHeight; i++)
+        {
+            for (int j = 0; j < pictureWidth; j++)
+            {
+                int a = i % (mapCellWidth + mapWallWidth);
+                int b = j % (mapCellWidth + mapWallWidth);
+
+                if (a < mapCellWidth && b < mapCellWidth)
+                {
+                    mapPixels[i, j] = 1;
+                }
+                else if (a >= mapCellWidth && b >= mapCellWidth)
+                {
+                    mapPixels[i, j] = 2;
+                }
+                else
+                {
+                    mapPixels[i, j] = 3;
+                }
+            }
+        }
 
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
@@ -83,6 +115,16 @@ public class MazeRenderer : MonoBehaviour
                     var topWall = Instantiate(wallPrefab, transform) as Transform;
                     topWall.position = position + new Vector3(0, 0, size / 2);
                     topWall.localScale = new Vector3(size, topWall.localScale.y, topWall.localScale.z);
+                }
+                else
+                {
+                    for (int a = 0; a < mapCellWidth; a++)
+                    {
+                        for (int b = 0; b < mapWallWidth; b++)
+                        {
+                            mapPixels[a + (i * (mapCellWidth + mapWallWidth)) + mapWallWidth, b + ((j + 1) * (mapCellWidth + mapWallWidth))] = 4;
+                        }
+                    }
                 }
 
                 if (cell.HasFlag(WallState.LIGHTUP))
@@ -96,6 +138,16 @@ public class MazeRenderer : MonoBehaviour
                     leftWall.position = position + new Vector3(-size / 2, 0, 0);
                     leftWall.localScale = new Vector3(size, leftWall.localScale.y, leftWall.localScale.z);
                     leftWall.eulerAngles = new Vector3(0, 90, 0);
+                }
+                else
+                {
+                    for (int a = 0; a < mapWallWidth; a++)
+                    {
+                        for (int b = 0; b < mapCellWidth; b++)
+                        {
+                            mapPixels[a + (i * (mapCellWidth + mapWallWidth)), b + (j * (mapCellWidth + mapWallWidth) + mapWallWidth)] = 4;
+                        }
+                    }
                 }
 
                 if (cell.HasFlag(WallState.LIGHTLEFT))
@@ -112,13 +164,23 @@ public class MazeRenderer : MonoBehaviour
                         rightWall.localScale = new Vector3(size, rightWall.localScale.y, rightWall.localScale.z);
                         rightWall.eulerAngles = new Vector3(0, 90, 0);
                     }
-
-                    if (cell.HasFlag(WallState.LIGHTRIGHT))
+                    else
                     {
-                        var rightLight = Instantiate(lightPrefab, transform) as Transform;
-                        rightLight.position = position + new Vector3(+size / 2 - horizOffset, vertOffset, 0);
-                        rightLight.eulerAngles = new Vector3(0, 90, 0);
+                        for (int a = 0; a < mapCellWidth; a++)
+                        {
+                            for (int b = 0; b < mapWallWidth; b++)
+                            {
+                                mapPixels[a + (i * (mapCellWidth + mapWallWidth)) + mapWallWidth, b + ((j + 1) * (mapCellWidth + mapWallWidth))] = 4;
+                            }
+                        }
                     }
+                }
+
+                if (cell.HasFlag(WallState.LIGHTRIGHT))
+                {
+                    var rightLight = Instantiate(lightPrefab, transform) as Transform;
+                    rightLight.position = position + new Vector3(+size / 2 - horizOffset, vertOffset, 0);
+                    rightLight.eulerAngles = new Vector3(0, 90, 0);
                 }
 
                 if (j == 0) {
@@ -127,12 +189,12 @@ public class MazeRenderer : MonoBehaviour
                         bottomWall.position = position + new Vector3(0, 0, -size / 2);
                         bottomWall.localScale = new Vector3(size, bottomWall.localScale.y, bottomWall.localScale.z);
                     }
+                }
 
-                    if (cell.HasFlag(WallState.LIGHTDOWN))
-                    {
-                        var bottomLight = Instantiate(lightPrefab, transform) as Transform;
-                        bottomLight.position = position + new Vector3(0, vertOffset, -size / 2 + horizOffset);
-                    }
+                if (cell.HasFlag(WallState.LIGHTDOWN))
+                {
+                    var bottomLight = Instantiate(lightPrefab, transform) as Transform;
+                    bottomLight.position = position + new Vector3(0, vertOffset, -size / 2 + horizOffset);
                 }
             }
         }
