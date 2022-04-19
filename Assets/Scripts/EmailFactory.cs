@@ -7,8 +7,13 @@ using System.Security.Cryptography.X509Certificates;
 
 public class EmailFactory : MonoBehaviour
 {
-    public InputField bodyMessage;
-    public InputField recipientEmail;
+    //[SerializeField]
+    public string bodyMessage = "This is a good email :) -The Daedalus Team";
+    //public string bodyMessage;
+
+    //[SerializeField]
+    public string recipientEmail = "dgkaminski@wpi.edu"; //Input Field
+    //public string recipientEmail;
 
     public void SendEmail()
     {
@@ -20,11 +25,12 @@ public class EmailFactory : MonoBehaviour
         SmtpServer.Port = 587;
 
         mail.From = new MailAddress("daedalus.scripts@gmail.com");
-        mail.To.Add(new MailAddress(recipientEmail.text));
+        //mail.To.Add(new MailAddress(recipientEmail.text));
+        mail.To.Add(new MailAddress(recipientEmail));
 
         mail.Subject = "Open this Message to See the Daedalus Maze Map!";
-        mail.Body = bodyMessage.text;
-
+        //mail.Body = bodyMessage.text;
+        mail.Body = bodyMessage;
 
         SmtpServer.Credentials = new System.Net.NetworkCredential("daedalus.scripts@gmail.com", "pivfos-fescip-9sebdU") as ICredentialsByHost; SmtpServer.EnableSsl = true;
         ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)

@@ -11,10 +11,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/GoogleVR/Demos/Scenes/HelloVR.unity
     guid: bb36d2905dc634f1c9eecb35beecaca8
-  - enabled: 0
-    path: Assets/Scenes/MazeTest_v1.0.0.unity
+  - enabled: 1
+    path: Assets/Scenes/Maze.unity
     guid: 884d9d041019a457aa22cec96cb507e0
   - enabled: 1
-    path: Assets/Scenes/MenuTesterCorrectAspectRatio.unity
+    path: Assets/Scenes/MainMenu.unity
     guid: 9bd4fe49d360846a3882495a39657be0
   m_configObjects: {}
