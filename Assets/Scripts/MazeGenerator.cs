@@ -350,16 +350,19 @@ public static class MazeGenerator
 
         var rng = new System.Random();
 
+        //Sets every cell to have every wall
         for (int i = 0; i < width; ++i)
         {
             for (int j = 0; j < height; ++j)
             {
                 maze[i, j] = WallState.RIGHT | WallState.LEFT | WallState.UP | WallState.DOWN;
 
+                //Checks if there should be a light in this cell
                 if (rng.NextDouble() < lightChance)
                 {
                     maze[i, j] |= WallState.LIGHT;
 
+                    //Randomly chooses a wall to place the light on
                     int rand = rng.Next(0, 4);
                     if (rand == 0)
                     {

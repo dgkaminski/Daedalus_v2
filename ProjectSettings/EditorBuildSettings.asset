@@ -11,10 +11,16 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/GoogleVR/Demos/Scenes/HelloVR.unity
     guid: bb36d2905dc634f1c9eecb35beecaca8
-  - enabled: 1
-    path: Assets/Scenes/Maze.unity
-    guid: 884d9d041019a457aa22cec96cb507e0
+  - enabled: 0
+    path: Assets/Scenes/TextureTesting.unity
+    guid: e1fe1e67ce48849aaac687c780542a18
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 9bd4fe49d360846a3882495a39657be0
+  - enabled: 1
+    path: Assets/Scenes/OptionsMenu.unity
+    guid: 4e755c4b87814482a839c102ba531326
+  - enabled: 1
+    path: Assets/Scenes/Maze.unity
+    guid: 884d9d041019a457aa22cec96cb507e0
   m_configObjects: {}
