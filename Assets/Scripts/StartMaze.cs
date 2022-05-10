@@ -5,9 +5,10 @@ using UnityEngine;
 public class StartMaze : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         MazeRenderer mazeRenderer = GameObject.Find("MazeRenderer").GetComponent<MazeRenderer>();
+        Debug.Log("The object was found");
         mazeRenderer.StartMaze();
         Debug.Log("The maze was attempted to be generated");
     }

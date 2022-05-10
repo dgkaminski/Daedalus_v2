@@ -95,10 +95,15 @@ public class WalkingPedometer : MonoBehaviour
        
     }
 
+    /*public void Spawn(float x,float y, float z)
+    {
+        transform.position = new Vector3(x, y, z);
+    }
+
     private void Update()
     {
         isGrounded = cc.isGrounded;
-    }
+    }*/
 
     void FixedUpdate()
     { 
@@ -169,7 +174,7 @@ public class WalkingPedometer : MonoBehaviour
                 }
                 else if(isGrounded==true)
                 {
-                    corrJump= StartCoroutine(jump());
+                    corrJump = StartCoroutine(jump());
                 }
 
 

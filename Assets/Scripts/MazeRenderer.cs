@@ -26,6 +26,12 @@ public class MazeRenderer : MonoBehaviour
     private Transform floorPrefab = null;
 
     [SerializeField]
+    private Transform goalPrefab = null;
+
+    [SerializeField]
+    private GameObject playerPrefab = null;
+
+    [SerializeField]
     [Range(0, 1)]
     private float horizOffset = 0.0f;
 
@@ -66,7 +72,7 @@ public class MazeRenderer : MonoBehaviour
     private Color cellColor = Color.white;
 
     
-    private Color nodeColor = Color.green;
+    //private Color nodeColor = Color.green;
 
     public MazeRenderer(/*int width = defaultWidth, int height = defaultHeight, Color wall = new Color(0, 0, 0, 1), Color cell = Color.white, Color node = Color.green*/)
     {
@@ -83,7 +89,11 @@ public class MazeRenderer : MonoBehaviour
         var maze = MazeGenerator.Generate(width, height, lightChance);
         Draw(maze);
 
-        GameObject.Find("Player").GetComponent<Transform>().position = new Vector3(-width / 2, 0.5f, -height / 2);
+        //GameObject.Find("Player").GetComponent<WalkingPedometer>().Spawn(-width / 2, 1.7f, -height / 2);
+
+        //Transform toMove = player.GetComponent<Transform>();
+
+        //toMove.localPosition = new Vector3(-width / 2, 1.7f, -height / 2) + gameObject.transform.position;
     }
 
     /**
@@ -113,6 +123,9 @@ public class MazeRenderer : MonoBehaviour
         //Generates the map
         Texture2D map = new Texture2D(pictureWidth, pictureHeight);
 
+        //GameObject player = Instantiate(playerPrefab);
+        //player.position = new Vector3(-width / 2, 1.5f, -height / 2);
+
         //Sets the default map
         for (int i = 0; i < pictureHeight; i++)
         {
@@ -121,11 +134,12 @@ public class MazeRenderer : MonoBehaviour
                 int a = i % (mapCellWidth + mapWallWidth);
                 int b = j % (mapCellWidth + mapWallWidth);
 
-                if (a < mapWallWidth && b < mapWallWidth)
+                /*if (a < mapWallWidth && b < mapWallWidth)
                 {
                     map.SetPixel(j, i, nodeColor);
                 }
-                else if (a >= mapWallWidth && b >= mapWallWidth)
+                else */
+                if (a >= mapWallWidth && b >= mapWallWidth)
                 {
                     map.SetPixel(j, i, cellColor);
                 }
@@ -261,14 +275,22 @@ public class MazeRenderer : MonoBehaviour
             }
         }
 
+        var goal = Instantiate(goalPrefab, transform) as Transform;
+        goal.position = new Vector3((float) (width - size) / 2, 0.5f, (float) (height - size) / 2);
+        goal.localScale = new Vector3(size, size, size);
+
         //Sends the map in an email
         map.Apply();
         byte[] mapBytes = ImageConversion.EncodeArrayToPNG(map.GetRawTextureData(), map.graphicsFormat, (uint) pictureWidth, (uint) pictureHeight);
         Object.Destroy(map);
-        //File.WriteAllBytes(Application.dataPath + "/../LabyrinthMap.png", mapBytes);
-        System.IO.File.WriteAllBytes(Application.dataPath + "/../LabyrinthMap.png", mapBytes);
+        System.IO.File.WriteAllBytes($"{Application.dataPath}/../LabyrinthMap.png", mapBytes);
         EmailFactory factory = new EmailFactory();
         factory.SendEmail();
+    }
+
+    public void SaveFile(byte[] file, string name)
+    {
+
     }
 
     // Update is called once per frame

@@ -7,11 +7,15 @@ using System.Security.Cryptography.X509Certificates;
 
 public class EmailFactory// : MonoBehaviour
 {
+    string toSendTo = "daedalus.scripts@gmail.com";
     // [SerializeField]
-    public string toSendTo = "daedlus.scripts@gmail.com";
     //Default email will be sent to the daedalus email to avoid pinging anyone else
     public EmailFactory()
     {
+    }
+    public string setEmail()
+    {
+        return toSendTo;
     }
 
     public void SendEmail(string map = "LabyrinthMap.png", string recipient = "daedalus.scripts@gmail.com", string subject = "Open this Message to See the Daedalus Maze Map!", string body = "This is a good email :) -The Daedalus Team")
@@ -25,7 +29,7 @@ public class EmailFactory// : MonoBehaviour
 
         mail.From = new MailAddress("daedalus.scripts@gmail.com");
         //mail.To.Add(new MailAddress(recipientEmail.text));
-        mail.To.Add(new MailAddress(toSendTo));
+        mail.To.Add(new MailAddress(PersistentStorage.emailReturn()));
 
         mail.Subject = subject;
         //mail.Body = bodyMessage.text;

@@ -9,4 +9,8 @@ public class ChangeScene : MonoBehaviour
     {
         SceneManager.LoadScene(sceneName);
     }
+    public void mazeChange()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
 }

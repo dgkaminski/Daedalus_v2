@@ -9,7 +9,7 @@ public class SaveEmail : MonoBehaviour
     {
         takenIn = input;
         EmailFactory emailFactory = new EmailFactory();
-        emailFactory.toSendTo = takenIn;
+        ;
         Debug.Log(takenIn);
     }
 }

@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.IO;
 
 public class PersistentStorage : MonoBehaviour
 {
+    public string emailRecepient = "daedalus.scripts@gmail.com";
     public static DirectoryInfo SafeCreateDirectory(string path)
     {
         //Generate if you don't check if the directory exists
@@ -15,21 +17,21 @@ public class PersistentStorage : MonoBehaviour
         return Directory.CreateDirectory(path);
     }
 
-    public void emailSave(string email)
+    public static void emailSave(string email)
     {
         //Data storage
-        SafeCreateDirectory(Application.persistentDataPath + "/" + "DaedalusFiles");
+        SafeCreateDirectory($"{Application.persistentDataPath}/Emails");
         string json = JsonUtility.ToJson(email);
-        StreamWriter writer = new StreamWriter(Application.persistentDataPath + "/" + "DaedalusFiles" + "/email.json");
+        StreamWriter writer = new StreamWriter($"{Application.persistentDataPath}/Emails/email.json");
         writer.Write(json);
         writer.Flush();
         writer.Close();
     }
 
-    public string emailReturn (string Directory_path)
+    public static string emailReturn()
     {
         //Data acquisition
-        var reader = new StreamReader(Application.persistentDataPath + "/" + "DaedalusFiles" + "/email.json");
+        var reader = new StreamReader($"{Application.persistentDataPath}/Emails/email.json");
         string json = reader.ReadToEnd();
         reader.Close();
         return json;//Convert for ease of use
