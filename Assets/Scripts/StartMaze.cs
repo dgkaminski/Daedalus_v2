@@ -7,9 +7,10 @@ public class StartMaze : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
+        Debug.Log("The maze was attempted to be generated.");
         MazeRenderer mazeRenderer = GameObject.Find("MazeRenderer").GetComponent<MazeRenderer>();
         Debug.Log("The object was found");
         mazeRenderer.StartMaze();
-        Debug.Log("The maze was attempted to be generated");
+        Debug.Log("The maze was generated.");
     }
 }

@@ -20,6 +20,10 @@ public class EmailFactory// : MonoBehaviour
 
     public void SendEmail(string map = "LabyrinthMap.png", string recipient = "daedalus.scripts@gmail.com", string subject = "Open this Message to See the Daedalus Maze Map!", string body = "This is a good email :) -The Daedalus Team")
     {
+        Debug.Log($"Attempted to send email to: {recipient}\nwith subject: {subject}");
+        //string toSendTo = recipient;
+        string toSendTo = PersistentStorage.emailReturn().ToString();
+        Debug.Log("The Email Factory sets the recepient to: " + toSendTo);
         MailMessage mail = new MailMessage();
         SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
         SmtpServer.Timeout = 10000;
@@ -29,7 +33,9 @@ public class EmailFactory// : MonoBehaviour
 
         mail.From = new MailAddress("daedalus.scripts@gmail.com");
         //mail.To.Add(new MailAddress(recipientEmail.text));
-        mail.To.Add(new MailAddress(PersistentStorage.emailReturn()));
+        //mail.To.Add(new MailAddress(PersistentStorage.emailReturn()));
+        //Debug.Log("Returned email from stored value");
+        mail.To.Add(toSendTo);
 
         mail.Subject = subject;
         //mail.Body = bodyMessage.text;
@@ -55,6 +61,8 @@ public class EmailFactory// : MonoBehaviour
 
         mail.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
         SmtpServer.Send(mail);
+
+        Debug.Log($"Sent an email to: {recipient}\nwith subject: {subject}");
     }
 
 

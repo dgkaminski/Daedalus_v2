@@ -14,16 +14,21 @@ public class PersistentStorage : MonoBehaviour
         {
             return null;
         }
+        Debug.Log("The directory does not exist, new one was created");
         return Directory.CreateDirectory(path);
+        
     }
 
+    
     public static void emailSave(string email)
     {
         //Data storage
         SafeCreateDirectory($"{Application.persistentDataPath}/Emails");
         string json = JsonUtility.ToJson(email);
+        //StreamWriter writer = new StreamWriter($"{Application.persistentDataPath}/Emails/email.json");
         StreamWriter writer = new StreamWriter($"{Application.persistentDataPath}/Emails/email.json");
-        writer.Write(json);
+        writer.Write(email);
+        Debug.Log("The email was stored");
         writer.Flush();
         writer.Close();
     }

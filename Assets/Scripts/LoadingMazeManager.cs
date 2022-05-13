@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class LoadingMazeManager : MonoBehaviour
 {
+    // Loads the scene in the next build index by adding 1 to the current buildIndex
     public void LoadNextScene()
     {
         //SceneManager.LoadScene("MazeTest_v1.0.0");

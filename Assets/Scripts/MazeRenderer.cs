@@ -14,7 +14,7 @@ public class MazeRenderer : MonoBehaviour
     public int height = 10;
 
     [SerializeField]
-    private float size = 1f;
+    public float size = 1f;
 
     [SerializeField]
     private Transform wallPrefab = null;
@@ -26,10 +26,12 @@ public class MazeRenderer : MonoBehaviour
     private Transform floorPrefab = null;
 
     [SerializeField]
-    private Transform goalPrefab = null;
+    private GameObject goalPrefab = null;
 
+    /*
     [SerializeField]
     private GameObject playerPrefab = null;
+    */
 
     [SerializeField]
     [Range(0, 1)]
@@ -72,7 +74,7 @@ public class MazeRenderer : MonoBehaviour
     private Color cellColor = Color.white;
 
     
-    //private Color nodeColor = Color.green;
+    private Color goalColor = Color.green;
 
     public MazeRenderer(/*int width = defaultWidth, int height = defaultHeight, Color wall = new Color(0, 0, 0, 1), Color cell = Color.white, Color node = Color.green*/)
     {
@@ -84,10 +86,19 @@ public class MazeRenderer : MonoBehaviour
      */
     public void StartMaze()
     {
+        Debug.Log("Attemped to start the maze");
+        foreach (Transform child in GetComponent<Transform>())
+        {
+            GameObject.Destroy(child);
+        }
+
+
         DrawFloor();
 
         var maze = MazeGenerator.Generate(width, height, lightChance);
         Draw(maze);
+
+        Debug.Log("Started the maze");
 
         //GameObject.Find("Player").GetComponent<WalkingPedometer>().Spawn(-width / 2, 1.7f, -height / 2);
 
@@ -101,9 +112,13 @@ public class MazeRenderer : MonoBehaviour
      */
     private void DrawFloor()
     {
+        Debug.Log("Attempted to add the floor of the maze to the scene");
+
         var floor = Object.Instantiate<Transform>(floorPrefab, transform) as Transform;
         floor.position = new Vector3(0, 0, 0);
         floor.localScale = new Vector3(width, 1, height);
+
+        Debug.Log("Added the floor to the scene");
 
         /*floor = Instantiate(floorPrefab, transform) as Transform;
         floor.position = new Vector3(0, -6.48f + 9, 0);
@@ -115,6 +130,7 @@ public class MazeRenderer : MonoBehaviour
      */
     private void Draw(WallState[,] maze)
     {
+        Debug.Log("Attempted to add the maze to the scene and draw a map of it.");
 
         //Sets the dimensions of the map
         int pictureWidth = width * (mapCellWidth + mapWallWidth) + mapWallWidth;
@@ -147,6 +163,14 @@ public class MazeRenderer : MonoBehaviour
                 {
                     map.SetPixel(j, i, wallColor);
                 }
+            }
+        }
+
+        for (int i = 0; i < mapCellWidth; i++)
+        {
+            for (int j = 0; j < mapCellWidth; j++)
+            {
+                map.SetPixel(i + ((mapWallWidth + mapCellWidth) * width) - mapCellWidth, j + ((mapWallWidth + mapCellWidth) * height) - mapCellWidth, goalColor);
             }
         }
 
@@ -275,9 +299,28 @@ public class MazeRenderer : MonoBehaviour
             }
         }
 
-        var goal = Instantiate(goalPrefab, transform) as Transform;
-        goal.position = new Vector3((float) (width - size) / 2, 0.5f, (float) (height - size) / 2);
-        goal.localScale = new Vector3(size, size, size);
+        GameObject goal = (GameObject) Instantiate(goalPrefab, transform) as GameObject;
+        goal.transform.position = transform.position + new Vector3((float) (width - size) / 2, 0.5f, (float) (height - size) / 2);
+        goal.transform.localScale = new Vector3(size, size, size);
+        Collider goalCollider = goal.GetComponent<Collider>();
+        goalCollider.enabled = true;
+
+        if (width % 2 == 0)
+        {
+            goal.transform.position -= new Vector3(size / 2f, 0, 0);
+        }
+        if (height % 2 == 0)
+        {
+            goal.transform.position -= new Vector3(0, 0, size / 2f);
+        }
+
+        GameObject player = GameObject.Find("Player");
+        player.transform.parent = transform;
+        player.transform.position = goal.transform.position * -1;
+
+         
+
+        Debug.Log("Added the maze to the scene and drew a map of it");
 
         //Sends the map in an email
         map.Apply();

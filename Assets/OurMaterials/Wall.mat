@@ -12,7 +12,7 @@ Material:
   m_ShaderKeywords: _GLOSSYREFLECTIONS_OFF _SPECULARHIGHLIGHTS_OFF
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
+  m_DoubleSidedGI: 1
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
@@ -40,8 +40,8 @@ Material:
         m_Scale: {x: 1, y: 5}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: df70a01367b28419d866823ab868c64c, type: 3}
-        m_Scale: {x: 1, y: 5}
+        m_Texture: {fileID: 2800000, guid: 7bd84b258a07a44109b83a3dde494f96, type: 3}
+        m_Scale: {x: 3, y: 12}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}

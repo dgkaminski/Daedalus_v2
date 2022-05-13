@@ -27,7 +27,9 @@ namespace GoogleVR.Demos
         {
             Input.backButtonLeavesApp = true;
         }
-
+    /// <summary>
+    /// 
+    /// </summary>
         private void Update()
         {
             // Exit when (X) is tapped.

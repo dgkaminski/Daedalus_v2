@@ -84,6 +84,19 @@ public class WalkingPedometer : MonoBehaviour
     {
         // initialize the filters and the objective
         averageAcceleration = Input.acceleration.magnitude;
+        MazeRenderer maze = GameObject.Find("MazeRenderer").GetComponent<MazeRenderer>();
+
+        transform.position = new Vector3((float)(maze.width - maze.size) / 2, 0.5f, (float)(maze.height - maze.size) / 2);
+
+        if (maze.width % 2 == 0)
+        {
+            transform.position -= new Vector3(maze.size / 2f, 0, 0);
+        }
+        if (maze.height % 2 == 0)
+        {
+            transform.position -= new Vector3(0, 0, maze.size / 2f);
+        }
+
         objective = transform.position;
 
         //set the head transform

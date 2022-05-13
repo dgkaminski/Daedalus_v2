@@ -19,7 +19,7 @@ public class SwitchRendering : MonoBehaviour
     public IEnumerable SwitchToVR()
     {
         // Device names are lowercase, as returned by `XRSettings.supportedDevices`.
-        string desiredDevice = "daydream"; // Or "cardboard".
+        string desiredDevice = "Daydream"; // Or "cardboard".
 
         // Some VR Devices do not support reloading when already active, see
         // https://docs.unity3d.com/ScriptReference/XR.XRSettings.LoadDeviceByName.html
