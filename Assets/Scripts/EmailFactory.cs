@@ -4,6 +4,8 @@ using UnityEngine.UI;
 using System.Net.Mail;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
+using System.Collections.Generic;
+using System.Text;
 
 // sets the users email and sends a picture of the maze to the user
 public class EmailFactory// : MonoBehaviour
@@ -59,13 +61,17 @@ public class EmailFactory// : MonoBehaviour
         mail.AlternateViews.Add(html);
         //mail.AlternateViews.Add(plain);
 
-        SmtpServer.Credentials = new System.Net.NetworkCredential("daedalus.scripts@gmail.com", "pivfos-fescip-9sebdU") as ICredentialsByHost; SmtpServer.EnableSsl = true;
+        SmtpServer.Credentials = new System.Net.NetworkCredential("daedalus.scripts@gmail.com", "pivfos-fescip-9sebdU") as ICredentialsByHost;
+        SmtpServer.EnableSsl = true;
         ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
         {
             return true;
         };
 
         mail.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+        ServicePointManager.ServerCertificateValidationCallback =
+    delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+    { return true; };
         SmtpServer.Send(mail);
 
         Debug.Log($"Sent an email to: {recipient}\nwith subject: {subject}");
