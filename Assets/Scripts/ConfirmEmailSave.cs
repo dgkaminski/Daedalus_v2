@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-// saves email and uses persistent storage 
+// saves email and uses persistent storage
+
 public class ConfirmEmailSave : MonoBehaviour
 {
     public string emailString;

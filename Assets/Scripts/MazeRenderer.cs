@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 //using UnityEngine.Windows;
 
+// renders the maze by altering dimensions, adding the floor, and drawing a map of the maze
+
 public class MazeRenderer : MonoBehaviour
 {
     //[SerializeField]
