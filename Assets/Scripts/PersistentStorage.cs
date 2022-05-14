@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 
+// saves the user inputed email and stores it as a json file
 public class PersistentStorage : MonoBehaviour
 {
     public string emailRecepient = "daedalus.scripts@gmail.com";

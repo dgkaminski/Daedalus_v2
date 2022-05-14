@@ -2,6 +2,8 @@
 using UnityEngine;
 using UnityEngine.XR;
 
+// switches between cardboard and noncardboard mode
+
 public class ToggleVR : MonoBehaviour
 {
     // calls switch method

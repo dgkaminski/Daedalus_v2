@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// saves the user email if the inputField is not null
+
 public class SaveEmail : MonoBehaviour
 {
     /* private void Start()
@@ -21,7 +23,7 @@ public class SaveEmail : MonoBehaviour
          PersistentStorage.emailSave(input);
          Debug.Log("The persistent storage had" + input + "stored in it");
      }*/
-    // Saves email that user inputs using persistent storage if inputField is not null 
+    // Saves email that user inputs using persistent storage if inputField is not null
     public void sendToStorage() 
     {
         //string defaultEmail = "daedalus.scripts@gmail.com";

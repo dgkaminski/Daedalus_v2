@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// displays victory scene once the player passes through the goal
+
 public class Victory : MonoBehaviour
 {
     ChangeScene sceneChanger;
@@ -19,7 +21,7 @@ public class Victory : MonoBehaviour
     {
         
     }
-    // Changes to a victory scene and destroys the game object once the player reaches goal
+    // Transforms to a victory scene and destroys the game object once the player reaches the goal
     void OnTriggerEnter(Collider collider)
     {
         string name = collider.gameObject.name;

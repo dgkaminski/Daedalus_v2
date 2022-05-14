@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Destroys and prevents destroying the game object when needed
+
 public class DontDestroyOnLoad : MonoBehaviour
 {
     // Start is called before the first frame update

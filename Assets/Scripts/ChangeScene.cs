@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// Allows for changes between different scenes through buttons
+
 public class ChangeScene : MonoBehaviour
 {
     // Takes a string parameter and changes the displayed screen

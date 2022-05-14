@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// spawns the player and places it in the maze
+
 public class Spawn : MonoBehaviour
 {
 

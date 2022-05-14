@@ -5,6 +5,7 @@ using System.Net.Mail;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 
+// sets the users email and sends a picture of the maze to the user
 public class EmailFactory// : MonoBehaviour
 {
     string toSendTo = "daedalus.scripts@gmail.com";
@@ -13,28 +14,33 @@ public class EmailFactory// : MonoBehaviour
     public EmailFactory()
     {
     }
+    // sets email to default daedalus script email
     public string setEmail()
     {
         return toSendTo;
     }
-
-    public void SendEmail(string map = "LabyrinthMap.png", string recipient = "daedalus.scripts@gmail.com", string subject = "Open this Message to See the Daedalus Maze Map!", string body = "This is a good email :) -The Daedalus Team")
+    // sends maze png to default daedalus script email with subject and message
+    public void SendEmail(string map = "LabyrinthMap.png", string recipient = "daedalus.scripts@gmail.com", string subject = "Open this Message to See the Daedalus Maze Map!", string body = "Good luck :) -The Daedalus Team")
     {
         Debug.Log($"Attempted to send email to: {recipient}\nwith subject: {subject}");
-        //string toSendTo = recipient;
-        string toSendTo = PersistentStorage.emailReturn().ToString();
+        string toSendTo = recipient;
+        toSendTo = PersistentStorage.emailReturn().ToString();
         Debug.Log("The Email Factory sets the recepient to: " + toSendTo);
         MailMessage mail = new MailMessage();
-        SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+        SmtpClient SmtpServer = new SmtpClient();
+        SmtpServer.DeliveryMethod = SmtpDeliveryMethod.Network;
+        SmtpServer.Host = "smtp.gmail.com";
         SmtpServer.Timeout = 10000;
         SmtpServer.DeliveryMethod = SmtpDeliveryMethod.Network;
         SmtpServer.UseDefaultCredentials = false;
         SmtpServer.Port = 587;
+        SmtpServer.EnableSsl = true;
 
         mail.From = new MailAddress("daedalus.scripts@gmail.com");
         //mail.To.Add(new MailAddress(recipientEmail.text));
         //mail.To.Add(new MailAddress(PersistentStorage.emailReturn()));
-        //Debug.Log("Returned email from stored value");
+        Debug.Log("Returned email from stored value");
+        mail.To.Add(recipient);
         mail.To.Add(toSendTo);
 
         mail.Subject = subject;
@@ -48,10 +54,10 @@ public class EmailFactory// : MonoBehaviour
         AlternateView html = AlternateView.CreateAlternateViewFromString($"<p>{body}</p><img src=cid:map>", null, "text/html");
         html.LinkedResources.Add(mapImage);
 
-        AlternateView plain = AlternateView.CreateAlternateViewFromString("This message is viewable if your email does not let you view html. If so, this program does not work. We are working on fixing this problem. Thank you for being patient.", null, "text/plain");
+        //AlternateView plain = AlternateView.CreateAlternateViewFromString("This message is viewable if your email does not let you view html. If so, this program does not work. We are working on fixing this problem. Thank you for being patient.", null, "text/plain");
 
         mail.AlternateViews.Add(html);
-        mail.AlternateViews.Add(plain);
+        //mail.AlternateViews.Add(plain);
 
         SmtpServer.Credentials = new System.Net.NetworkCredential("daedalus.scripts@gmail.com", "pivfos-fescip-9sebdU") as ICredentialsByHost; SmtpServer.EnableSsl = true;
         ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// loads the next scene from the current scene
+
 public class LoadingMazeManager : MonoBehaviour
 {
     // Loads the scene in the next build index by adding 1 to the current buildIndex

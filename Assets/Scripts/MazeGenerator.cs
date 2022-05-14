@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+//builds the maze and its walls using recursive backtracking
+
 /**
  * Represents the state that a cell can have. Each flag represents a wall (LEFT, RIGHT, UP, and DOWN), a light in a given position (LIGHTLEFT, LIGHTRIGHT, LIGHTUP, LIGHTDOWN), whether or not the cell has a light at all (LIGHT), or whether the cell has been visited (VISITED)
  */

@@ -4,12 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 
+// allows for switching between vR and 2D
+
 public class SwitchRendering : MonoBehaviour
 {
+    //calls SwitchToVr method
     public void SwitchToVRHelper()
     {
         SwitchToVR();
     }
+    //calls SwitchTo2D method
     public void SwitchTo2DHelper()
     {
         SwitchTo2D();
@@ -35,7 +39,7 @@ public class SwitchRendering : MonoBehaviour
         XRSettings.enabled = true;
     }
     // Call via `StartCoroutine(SwitchTo2D())` from your code. Or, use
-    // `yield SwitchTo2D()` if calling from inside another coroutine.
+    // `yield SwitchTo2D()` if calling from inside another coroutine
    public IEnumerable SwitchTo2D()
     {
         // Empty string loads the "None" device.
@@ -51,7 +55,7 @@ public class SwitchRendering : MonoBehaviour
         ResetCameras();
     }
 
-    // Resets camera transform and settings on all enabled eye cameras.
+    // Resets camera transform and settings on all enabled eye cameras
     private void ResetCameras()
     {
         // Camera looping logic copied from GvrEditorEmulator.cs

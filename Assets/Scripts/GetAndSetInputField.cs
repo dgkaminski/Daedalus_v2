@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// persistent storage using the user inputed email
+
 public class GetAndSetInputField : MonoBehaviour
 {
     public InputField email;
