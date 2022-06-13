@@ -1,8 +1,9 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 // Constructs a maze of a user selected level difficulty
+//Is written by Daniel Kaminski, Jonah Sagarin, and Shryea Deverajan
 
 public class ChangeDifficulty : MonoBehaviour
 {
